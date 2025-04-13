@@ -1,4 +1,5 @@
-﻿using Tournament.DAL.Entities;
+﻿using System.Xml.Serialization;
+using Tournament.DAL.Entities;
 
 namespace Tournament.Services
 {
@@ -12,7 +13,7 @@ namespace Tournament.Services
             _tournamentOfSpanishService = new TournamentOfSpanishService();
         }
 
-        public void ShowMenu()
+        public void Menu()
         {
             Console.WriteLine("1. Show all tournaments");
             Console.WriteLine("2. Show tournament by name team");
@@ -26,90 +27,75 @@ namespace Tournament.Services
             Console.WriteLine("10. Update tournament");
             Console.WriteLine("11. Delete tournament");
             Console.WriteLine("12. Exit");
-        }
 
-        public void HandleMenuChoice(string? choice)
-        {
-            Console.Clear();
+            var choice = GetValidString("Please enter your choice: ");
 
             switch (choice)
             {
                 case "1":
                     ShowAllTournaments();
                     Console.WriteLine();
-                    WaitForUser();
                     break;
                 case "2":
                     ShowTournamentByNameTeam();
                     Console.WriteLine();
-                    WaitForUser();
                     break;
                 case "3":
                     ShowTournamentsByNameCity();
                     Console.WriteLine();
-                    WaitForUser();
                     break;
                 case "4":
+                    Console.Clear();
                     _tournamentOfSpanishService.ShowTeamWithMostWins();
                     Console.WriteLine();
-                    WaitForUser();
                     break;
                 case "5":
+                    Console.Clear();
                     _tournamentOfSpanishService.ShowTeamWithMostDefeats();
                     Console.WriteLine();
-                    WaitForUser();
                     break;
                 case "6":
+                    Console.Clear();
                     _tournamentOfSpanishService.ShowTeamWithMostDraws();
                     Console.WriteLine();
-                    WaitForUser();
                     break;
                 case "7":
+                    Console.Clear();
                     _tournamentOfSpanishService.ShowTeamWithMostGoals();
                     Console.WriteLine();
-                    WaitForUser();
                     break;
                 case "8":
+                    Console.Clear();
                     _tournamentOfSpanishService.ShowTeamWithMostSkipGoals();
                     Console.WriteLine();
-                    WaitForUser();
                     break;
                 case "9":
                     AddTournament();
                     Console.WriteLine();
-                    WaitForUser();
                     break;
                 case "10":
                     UpdateTournament();
                     Console.WriteLine();
-                    WaitForUser();
                     break;
                 case "11":
                     DeleteTournamentByNameCityAndNameTeam();
                     Console.WriteLine();
-                    WaitForUser();
                     break;
                 case "12":
                     Environment.Exit(0);
                     break;
                 default:
+                    Console.Clear();
                     Console.WriteLine("Invalid choice. Please try again.");
-                    WaitForUser();
+                    Console.WriteLine();
                     break;
             }
         }
 
 
-        private void WaitForUser()
-        {
-            Console.WriteLine("\nPress any key to return to menu...");
-            Console.ReadKey();
-            Console.Clear();
-        }
-
-
         private void ShowAllTournaments()
         {
+            Console.Clear();
             var tournaments = _tournamentOfSpanishService.GetAllTournaments();
 
             foreach (var tournament in tournaments)
@@ -121,26 +107,30 @@ namespace Tournament.Services
 
         private void ShowTournamentByNameTeam()
         {
-            var nameTeam = GetValidString("Enter name city:");
+            var nameTeam = GetValidString("Enter name team:");
 
             var tournament = _tournamentOfSpanishService.GetTournamentByNameTeam(nameTeam);
             if (tournament == null)
             {
+                Console.Clear();
                 Console.WriteLine("Tournament not found.");
                 return;
             }
+            Console.Clear();
             Console.WriteLine($"Name Team: {tournament.NameTeam}, \nName City: {tournament.NameCity}, \nCount Win: {tournament.CountWin}, \nCount Defeat: {tournament.CountDefeat}, \nCount Draw: {tournament.CountDraw}, \nCount Goals: {tournament.CountGoals}, \nCount Skip Goals: {tournament.CountSkipGoals}");
         }
 
 
         private void ShowTournamentsByNameCity()
         {
+            Console.Clear();
             var nameCity = GetValidString("Enter name city:");
 
             var tournaments = _tournamentOfSpanishService.GetTournamentsByNameCity(nameCity);
 
             if (tournaments == null || tournaments.Count == 0)
             {
+                Console.Clear();
                 Console.WriteLine("Tournaments not found.");
                 return;
             }
@@ -174,6 +164,9 @@ namespace Tournament.Services
                 CountGoals = countGoals,
                 CountSkipGoals = countSkipGoals
             };
+
+            Console.Clear();
+            Console.WriteLine("Team added");
             _tournamentOfSpanishService.AddTournament(tournament);
         }
 
@@ -184,6 +177,7 @@ namespace Tournament.Services
             var tournament = _tournamentOfSpanishService.GetTournamentByNameTeam(nameTeam);
             if (tournament == null)
             {
+                Console.Clear();
                 Console.WriteLine("Tournament not found.");
                 return;
             }
@@ -230,10 +224,11 @@ namespace Tournament.Services
                     UpdateAll(tournament);
                     break;
                 default:
+                    Console.Clear();
                     Console.WriteLine("Invalid choice.");
-                    Console.WriteLine("Please try again.");
                     break;
             }
+
         }
 
 
@@ -243,6 +238,9 @@ namespace Tournament.Services
 
             tournament.NameTeam = nameTeam;
             _tournamentOfSpanishService.UpdateTournament(tournament);
+            
+            Console.Clear();
+            Console.WriteLine("Name team updated");
         }
 
 
@@ -252,6 +250,9 @@ namespace Tournament.Services
 
             tournament.NameCity = nameCity;
             _tournamentOfSpanishService.UpdateTournament(tournament);
+           
+            Console.Clear();
+            Console.WriteLine("Name city updated");
         }
 
 
@@ -261,6 +262,9 @@ namespace Tournament.Services
 
             tournament.CountWin = countWin;
             _tournamentOfSpanishService.UpdateTournament(tournament);
+
+            Console.Clear();
+            Console.WriteLine("Count win updated");
         }
 
 
@@ -270,6 +274,9 @@ namespace Tournament.Services
 
             tournament.CountDefeat = countDefeat;
             _tournamentOfSpanishService.UpdateTournament(tournament);
+
+            Console.Clear();
+            Console.WriteLine("Count defeat updated");
         }
 
         private void UpdateCountDraw(TournamentOfSpanish tournament)
@@ -278,6 +285,9 @@ namespace Tournament.Services
 
             tournament.CountDraw = countDraw;
             _tournamentOfSpanishService.UpdateTournament(tournament);
+
+            Console.Clear();
+            Console.WriteLine("Count draw updated");
         }
 
         private void UpdateCountGoals(TournamentOfSpanish tournament)
@@ -286,6 +296,9 @@ namespace Tournament.Services
 
             tournament.CountGoals = countGoals;
             _tournamentOfSpanishService.UpdateTournament(tournament);
+
+            Console.Clear();
+            Console.WriteLine("Count goals updated");
         }
 
         private void UpdateCountSkipGoals(TournamentOfSpanish tournament)
@@ -294,6 +307,9 @@ namespace Tournament.Services
 
             tournament.CountSkipGoals = countSkipGoals;
             _tournamentOfSpanishService.UpdateTournament(tournament);
+
+            Console.Clear();
+            Console.WriteLine("Count skip goals updated");
         }
 
 
@@ -316,6 +332,9 @@ namespace Tournament.Services
             tournament.CountSkipGoals = countSkipGoals;
 
             _tournamentOfSpanishService.UpdateTournament(tournament);
+
+            Console.Clear();
+            Console.WriteLine("All updated");
         }
 
 
@@ -326,6 +345,7 @@ namespace Tournament.Services
             var tournament = _tournamentOfSpanishService.GetTournamentByNameTeam(nameTeam);
             if (tournament == null)
             {
+                Console.Clear();
                 Console.WriteLine("Tournament not found.");
                 return;
             }
@@ -335,8 +355,10 @@ namespace Tournament.Services
                 return;
             }
 
-            Console.WriteLine("Team remotely");
             _tournamentOfSpanishService.DeleteTournament(tournament);
+
+            Console.Clear();
+            Console.WriteLine("Team remotely");
         }
 
 
@@ -347,6 +369,7 @@ namespace Tournament.Services
             var tournament = _tournamentOfSpanishService.GetTournamentByNameCity(nameCity);
             if (tournament == null)
             {
+                Console.Clear();
                 Console.WriteLine("Tournaments not found.");
                 return;
             }
@@ -356,8 +379,10 @@ namespace Tournament.Services
                 return;
             }
 
-            Console.WriteLine("Team remotely");
             _tournamentOfSpanishService.DeleteTournament(tournament);
+
+            Console.Clear();
+            Console.WriteLine("Team remotely");
         }
 
 
@@ -378,8 +403,8 @@ namespace Tournament.Services
                     DeleteTournamentByNameCity();
                     break;
                 default:
+                    Console.Clear();
                     Console.WriteLine("Invalid choice.");
-                    Console.WriteLine("Please try again.");
                     break;
             }
         }
@@ -399,6 +424,7 @@ namespace Tournament.Services
                 Console.WriteLine("Invalid input. Please try again.");
             }
         }
+
 
         private string GetValidString(string message)
         {
@@ -429,6 +455,7 @@ namespace Tournament.Services
                 case "n":
                     return false;
                 default:
+                    Console.Clear();
                     Console.WriteLine("Invalid choice.");
                     return ConsentOfDeletion();
             }

@@ -9,12 +9,8 @@ namespace Tournament
             var start = new MenuService();
             while (true)
             {
-                start.ShowMenu();
-
-                Console.Write("Please enter your choice: ");
-                string input = Console.ReadLine(); 
-                start.HandleMenuChoice(input);
+                start.Menu();
             }
-        }
+        }   
     }
 }
