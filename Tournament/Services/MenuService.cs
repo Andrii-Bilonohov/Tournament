@@ -28,7 +28,7 @@ namespace Tournament.Services
             Console.WriteLine("11. Delete tournament");
             Console.WriteLine("12. Exit");
 
-            var choice = GetValidString("Please enter your choice: ");
+            var choice = GetValidString("Please enter your choice:");
 
             switch (choice)
             {
@@ -107,6 +107,7 @@ namespace Tournament.Services
 
         private void ShowTournamentByNameTeam()
         {
+            Console.Clear();
             var nameTeam = GetValidString("Enter name team:");
 
             var tournament = _tournamentOfSpanishService.GetTournamentByNameTeam(nameTeam);
@@ -135,6 +136,7 @@ namespace Tournament.Services
                 return;
             }
 
+            Console.Clear();
             foreach (var tournament in tournaments)
             {
                 Console.WriteLine($"Name Team: {tournament.NameTeam}, \nName City: {tournament.NameCity}, \nCount Win: {tournament.CountWin}, \nCount Defeat: {tournament.CountDefeat}, \nCount Draw: {tournament.CountDraw}, \nCount Goals: {tournament.CountGoals}, \nCount Skip Goals: {tournament.CountSkipGoals}");
@@ -415,7 +417,7 @@ namespace Tournament.Services
             int result;
             while (true)
             {
-                Console.WriteLine(message);
+                Console.Write(message + " ");
                 if (int.TryParse(Console.ReadLine(), out result) && result >= 0)
                 {
                     return result;
@@ -431,7 +433,7 @@ namespace Tournament.Services
             string result;
             while (true)
             {
-                Console.WriteLine(message);
+                Console.Write(message + " ");
                 result = Console.ReadLine();
                 if (!string.IsNullOrEmpty(result))
                 {

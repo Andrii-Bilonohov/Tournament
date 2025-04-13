@@ -18,13 +18,13 @@ namespace Tournament.Services
         }
 
 
-        public TournamentOfSpanish GetTournamentByNameTeam(string name)
+        public TournamentOfSpanish? GetTournamentByNameTeam(string name)
         {
             return _repository.GetAllTournaments()
                               .FirstOrDefault(t => t.NameTeam == name);
         }
 
-        public TournamentOfSpanish GetTournamentByNameCity(string name)
+        public TournamentOfSpanish? GetTournamentByNameCity(string name)
         {
             return _repository.GetAllTournaments()
                               .FirstOrDefault(t => t.NameCity == name);
@@ -38,7 +38,7 @@ namespace Tournament.Services
         }
 
 
-        public TournamentOfSpanish GetTournamentByNameCityAndNameTeam(string nameCity, string nameTeam)
+        public TournamentOfSpanish? GetTournamentByNameCityAndNameTeam(string nameCity, string nameTeam)
         {
             return _repository.GetAllTournaments()
                               .FirstOrDefault(t => t.NameCity == nameCity && t.NameTeam == nameTeam);
@@ -49,12 +49,13 @@ namespace Tournament.Services
         {
             var tournaments = _repository.GetAllTournaments();
             var teamWithMostWins = tournaments.OrderByDescending(t => t.CountWin).FirstOrDefault();
+            
             if (teamWithMostWins == null)
             {
                 Console.WriteLine("No tournaments found.");
             }
 
-            Console.WriteLine($"Team with most wins: {teamWithMostWins.NameTeam} with {teamWithMostWins.CountWin} wins.");
+            Console.WriteLine($"Team with most wins: {teamWithMostWins?.NameTeam} with {teamWithMostWins?.CountWin} wins.");
         }
 
         public void ShowTeamWithMostDefeats()
@@ -77,7 +78,7 @@ namespace Tournament.Services
             {
                 Console.WriteLine("No tournaments found.");
             }
-            Console.WriteLine($"Team with most draws: {teamWithMostDraws.NameTeam} with {teamWithMostDraws.CountDraw} draws.");
+            Console.WriteLine($"Team with most draws: {teamWithMostDraws?.NameTeam} with {teamWithMostDraws?.CountDraw} draws.");
         }
 
 
@@ -89,7 +90,7 @@ namespace Tournament.Services
             {
                 Console.WriteLine("No tournaments found.");
             }
-            Console.WriteLine($"Team with most goals: {teamWithMostGoals.NameTeam} with {teamWithMostGoals.CountGoals} goals.");
+            Console.WriteLine($"Team with most goals: {teamWithMostGoals?.NameTeam} with {teamWithMostGoals?.CountGoals} goals.");
         }
 
 
@@ -101,7 +102,7 @@ namespace Tournament.Services
             {
                 Console.WriteLine("No tournaments found.");
             }
-            Console.WriteLine($"Team with most skip goals: {teamWithMostSkipGoals.NameTeam} with {teamWithMostSkipGoals.CountSkipGoals} skip goals.");
+            Console.WriteLine($"Team with most skip goals: {teamWithMostSkipGoals?.NameTeam} with {teamWithMostSkipGoals?.CountSkipGoals} skip goals.");
         }
 
 
